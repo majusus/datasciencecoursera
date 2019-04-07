@@ -3,12 +3,13 @@ title: "Course 6 Project - Statistical Inference - PART 1"
 author: "majusus"
 date: "April 7, 2019"
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 
 #Git repository
 
+**URL** : https://github.com/majusus/datasciencecoursera/tree/master/Course6Assignment1
 
 # Synopsis
 This is a project for the Coursera Statistical Inference Class. The project consists of two parts:
