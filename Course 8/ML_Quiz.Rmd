@@ -1,0 +1,88 @@
+---
+title: "ML_Quiz"
+author: "majusus"
+date: "June 5, 2019"
+output: html_document
+---
+
+
+##installing "caret" package
+```{r}
+install.packages("caret")
+library(caret)
+```
+##loading the alzheimer disease data
+```{r}
+install.packages("AppliedPredictiveModeling")
+library(AppliedPredictiveModeling)
+data(AlzheimerDisease)
+```
+
+##partitioning data in training and test data (50-50)
+```{r}
+adData = data.frame(diagnosis,predictors)
+testIndex = createDataPartition(diagnosis, p = 0.50,list=FALSE)
+training = adData[-testIndex,]
+testing = adData[testIndex,]
+```
+
+##Loading cement data
+```{r}
+library(AppliedPredictiveModeling)
+data(concrete)
+library(caret)
+set.seed(1000)
+inTrain = createDataPartition(mixtures$CompressiveStrength, p = 3/4)[[1]]
+training = mixtures[ inTrain,]
+testing = mixtures[-inTrain,]
+```
+
+##plotting outcome (CompressiveStrength) versus the index of the samples
+```{r}
+install.packages("GGally","Hmisc")
+library(GGally)
+library(Hmisc)
+## Using ggpair
+training2 <- training
+#cut CompressiveStrength into 4 levels.  This is the only way to work with colour in ggpair
+training2$CompressiveStrength <- cut2(training2$CompressiveStrength, g=4)
+ggpairs(data = training2, columns = c("FlyAsh","Age","CompressiveStrength")
+        , mapping = ggplot2::aes(colour = CompressiveStrength))
+```
+
+##plotting histogram to confirm the SuperPlasticizer variable is skewed
+```{r}
+library(AppliedPredictiveModeling)
+data(concrete)
+suppressMessages(library(caret))
+set.seed(1000)
+inTrain = createDataPartition(mixtures$CompressiveStrength, p = 3/4)[[1]]
+training = mixtures[ inTrain,]
+testing = mixtures[-inTrain,]
+par(mfrow = c(2,1))
+hist(training$Superplasticizer)
+hist(log(training$Superplasticizer + 1))
+```
+
+
+##Find all the predictor variables in the training set that begin with IL 
+```{r}
+library(caret)
+library(AppliedPredictiveModeling)
+set.seed(3433)
+data(AlzheimerDisease)
+adData = data.frame(diagnosis,predictors)
+inTrain = createDataPartition(adData$diagnosis, p = 3/4)[[1]]
+training = adData[ inTrain,]
+testing = adData[-inTrain,]
+
+trainingIL <- training[,grep("^IL", names(training))]
+procTrain <- preProcess(trainingIL, method = "pca", thresh = 0.9 )
+procTrain
+```
+
+
+
+
+
+
