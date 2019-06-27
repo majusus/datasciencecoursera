@@ -1,0 +1,38 @@
+---
+title: "John Hopkins Coursera Course Developing Data Products - week2 Leaflet project"
+author: "majusus"
+date: "6/27/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This project ilustrates using leaflet package with R markdown to create interactive map. For each icon the link is provided so that clicking on it redirects to the wikipedia website. Map shows few selected places to visit in India during Holi festival, out of many more.
+
+#Background
+##Places to visit in India during Holi(Doljatra) Festival
+
+```{r}
+set.seed(2016)
+library(leaflet)
+
+
+holifest    <- data.frame (lat = c(27.4924, 25.3176, 27.5650, 19.0760,22.5726,13.0827),
+                           long = c(77.6737, 82.9739, 77.6593, 72.8777,88.3639,80.2707))
+
+holiPopups <- c(
+  "<a href='https://en.wikipedia.org/wiki/Mathura/'>Mathura</a>",
+  "<a href='https://en.wikipedia.org/wiki/Varanasi/'>Varanasi</a>",
+  "<a href='https://en.wikipedia.org/wiki/Vrindaban'>Vrindaban</a>",
+  "<a href='https://en.wikipedia.org/wiki/Mumbai'>Mumbai</a>",
+  "<a href='https://en.wikipedia.org/wiki/Kolkata'>Kolkata</a>",
+  "<a href='https://en.wikipedia.org/wiki/Chennai'>Chennai</a>")
+
+holi <- holifest %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(popup = holiPopups)
+holi
+```
