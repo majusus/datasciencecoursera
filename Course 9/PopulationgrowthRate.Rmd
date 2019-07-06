@@ -1,0 +1,39 @@
+---
+title: "Developing Data Products Week-3 Project"
+author: "majusus"
+date: "7/6/2019"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+
+Population Growth in India over the Years
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+This is a simple plot to show the population growth in India over the years 
+since 1950 to 2019.
+
+
+```{r echo = TRUE}
+fileloc <- "E:\\datascience\\datasciencecoursera\\Course 9\\data.csv"
+pGrowthData <- read.csv(fileloc,header = TRUE)
+summary(pGrowthData)
+```
+
+
+Population density growth in India fro 1950 to 2019
+
+```{r echo = FALSE,message=FALSE,warning=FALSE}
+library(plotly)
+p <- plot_ly(data = pGrowthData, x = pGrowthData$Year, y = pGrowthData$PopDensity, color = pGrowthData$Year)%>%
+        layout(title = 'Population Density Increase in India over the Years',
+         xaxis = list(title = 'Years'),
+         yaxis = list(title = 'Population Density'))
+p
+```
