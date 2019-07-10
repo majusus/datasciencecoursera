@@ -8,44 +8,41 @@
 #
 
 library(shiny)
-library(datasets)
+library(ggplot2)
+library(curl)
 
-mpgData <- mtcars
-mpgData$am <- factor(mpgData$am, labels = c("Automatic", "Manual"))
-
+# Define server logic
 shinyServer(function(input, output) {
     
-    formulaText <- reactive({
-        paste("mpg ~", input$variable)
-    })
+    # load data
+    data("diamonds")
     
-    formulaTextPoint <- reactive({
-        paste("mpg ~", "as.integer(", input$variable, ")")
-    })
+    # create the initial output
+    output$distPlot <- renderPlot({
+        
+        # subset the data based on the inputs
+        diamonds_sub <- subset(diamonds, cut == input$cut &
+                                   color == input$color &
+                                   clarity == input$clarity)
+        
+        # plot the diamond data with carat and price
+        p <- ggplot(data = diamonds_sub, aes(x = carat, y = price)) + geom_point()
+        p <- p + geom_smooth(method = "lm") + xlab("Carat") + ylab("Price")
+        p <- p + xlim(0, 6) + ylim (0, 20000)
+        p
+    }, height = 700)
     
-    fit <- reactive({
-        lm(as.formula(formulaTextPoint()), data=mpgData)
-    })
+    # create linear model
+    output$predict <- renderPrint({
+        diamonds_sub <- subset( diamonds, cut == input$cut &
+                                    color == input$color &
+                                    clarity == input$clarity)
+        fit <- lm(price~carat,data=diamonds_sub)
+        unname(predict(fit, data.frame(carat = input$lm)))})
     
-    output$caption <- renderText({
-        formulaText()
-    })
-    
-    output$mpgBoxPlot <- renderPlot({
-        boxplot(as.formula(formulaText()), 
-                data = mpgData,
-                outline = input$outliers)
-    })
-    
-    output$fit <- renderPrint({
-        summary(fit())
-    })
-    
-    output$mpgPlot <- renderPlot({
-        with(mpgData, {
-            plot(as.formula(formulaTextPoint()))
-            abline(fit(), col=2)
-        })
-    })
-    
-})
+    observeEvent(input$predict, {distPlot <<- NULL
+    output$distPlot <- renderPlot({p <- ggplot(data = diamonds, aes(x = carat, y = price)) + geom_point()
+    p <- p + geom_smooth(method = "lm") + xlab("Carat") + ylab("Price")
+    p <- p + xlim(0, 6) + ylim (0, 20000)
+    p
+    }, height = 700)})})
