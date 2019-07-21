@@ -1,0 +1,13 @@
+Steps to run MongodB
+
+1) Run cmd and cd C:\Program Files\MongoDB\Server\4.0\bin   --- point to mongod.exe and mongo.exe path
+
+2) mongod --dbpath E:\datascience\datasciencecoursera\Mongo\data ----point to data folder path and run mongod
+
+3) Run cmd and cd C:\Program Files\MongoDB\Server\4.0\bin  again
+
+4) mongo.exe
+
+OR
+
+After step 2 run studio3T and proceed

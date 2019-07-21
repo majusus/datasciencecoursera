@@ -1,0 +1,5 @@
+>>git status
+>>git add <filenames>  or git add */. --to add all files and folders
+>>git status --verify once
+>>git commit -m "message"
+>>git push
