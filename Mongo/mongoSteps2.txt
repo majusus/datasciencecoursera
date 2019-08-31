@@ -1,0 +1,28 @@
+
+------------mongo import steps
+mongo "mongodb+srv://mflix-x6jfv.mongodb.net/test" --username analytics
+
+mongoimport --host mflix-shard-0/mflix-shard-00-00-x6jfv.mongodb.net:27017,mflix-shard-00-01-x6jfv.mongodb.net:27017,mflix-shard-00-02-x6jfv.mongodb.net:27017 --ssl --username analytics --password analytics-password --authenticationDatabase admin --db mflix --collection movies_initial --type csv --file movies_initial.csv --fields "imdbID,title,year,rating,runtime,genre,released,director,writer,cast,metacritic,imdbRating,imdbVotes,poster,plot,fullplot,language,country,awards,lastupdated,type"
+
+
+------------Steps to connect Compass:
+
+1) Conn. String : mflix-shard-00-00-x6jfv.mongodb.net : 27017
+2) Auth : UserName and Password
+3) UName : analytics ; Pass : analytics-password
+
+
+--------------steps for setting up environment
+conda create -n intro-to-mongodb
+activate intro-to-mongodb
+jupyter notebook -- from inside notebooks folder
+
+--for installing pymongo
+
+activate intro-to-mongodb # on Windows
+pip install pymongo dnspython
+
+
+----------pymongo client
+"mongodb+srv://analytics:analytics-password@mflix-x6jfv.mongodb.net/mflix?retryWrites=true&w=majority"
+
