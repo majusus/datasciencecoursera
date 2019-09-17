@@ -1,0 +1,10 @@
+name: nextWordPredict
+account: majusus
+server: shinyapps.io
+appId: 129255
+bundleId: 586179
+url: https://majusus.shinyapps.io/nextWordPredict/
+when: 1476417828.37066
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: images/author_pic.jpg|images/jhu-logo.png|images/swiftkey.png|images/Thumbs.db|www/bootstrap.min_cerulean.css|www/bootstrap.min_lumen.css|www/bootstrap.min_superhero.css
